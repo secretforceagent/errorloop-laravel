@@ -33,7 +33,7 @@ ERRORLOOP_ENABLED=true
 
 The API key is created in your ErrorLoop project and is used to authenticate exception ingestion requests.
 
-The config file is published as `config/errorloop-sdk.php`.
+The config file is published as `config/errorloop.php`.
 
 ## Usage
 

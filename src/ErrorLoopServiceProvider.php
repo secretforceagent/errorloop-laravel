@@ -9,20 +9,20 @@ class ErrorLoopServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/errorloop-sdk.php', 'errorloop-sdk');
+        $this->mergeConfigFrom(__DIR__.'/../config/errorloop.php', 'errorloop');
 
         $this->app->singleton(ErrorLoopClient::class, function ($app) {
             return new ErrorLoopClient(
-                endpoint: $app['config']->get('errorloop-sdk.endpoint'),
-                apiKey: $app['config']->get('errorloop-sdk.api_key'),
-                release: $app['config']->get('errorloop-sdk.release'),
+                endpoint: $app['config']->get('errorloop.endpoint'),
+                apiKey: $app['config']->get('errorloop.api_key'),
+                release: $app['config']->get('errorloop.release'),
             );
         });
 
         $this->app->singleton(ErrorLoopReporter::class, function ($app) {
             return new ErrorLoopReporter(
                 client: $app->make(ErrorLoopClient::class),
-                release: $app['config']->get('errorloop-sdk.release'),
+                release: $app['config']->get('errorloop.release'),
             );
         });
     }
@@ -31,7 +31,7 @@ class ErrorLoopServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/errorloop-sdk.php' => config_path('errorloop-sdk.php'),
+                __DIR__.'/../config/errorloop.php' => config_path('errorloop.php'),
             ], 'errorloop-config');
         }
 
